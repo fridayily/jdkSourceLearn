@@ -1,0 +1,4 @@
+# Project exclude paths
+/out/
+/src/main/java/cn/my/test/hello/
+/target/
