@@ -105,7 +105,7 @@ public class AtomicReference<V> implements java.io.Serializable {
     }
 
     /**
-     * Atomically sets the value to the given updated value
+     * Atomically sets the value to the given updated value  进行原子性的更新操作
      * if the current value {@code ==} the expected value.
      * @param expect the expected value
      * @param update the new value

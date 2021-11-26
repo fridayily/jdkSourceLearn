@@ -11,8 +11,12 @@ public class CollectionExercise {
         list.add(new Dog("大黄", 100));
         list.add(new Dog("大壮", 8));
 
+        Dog mydog = new Dog("xxx",10);
+        mydog.setName("123");
+
         for (Object dog : list) {
             System.out.println("dog=" + dog);
+
 
         }
 

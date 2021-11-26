@@ -1,7 +1,5 @@
 package cn.my.test.list_;
 
-import cn.my.test.list_.Book;
-
 import java.util.ArrayList;
 import java.util.List;
 

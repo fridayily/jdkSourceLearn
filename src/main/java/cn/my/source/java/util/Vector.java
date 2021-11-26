@@ -156,7 +156,7 @@ public class Vector<E>
      * has size {@code 10} and its standard capacity increment is
      * zero.
      */
-    public Vector() {
+    public Vector() { // 默认情况下初始容量为10
         this(10);
     }
 
@@ -241,9 +241,11 @@ public class Vector<E>
      * method for ensuring capacity without incurring the cost of an
      * extra synchronization.
      *
+     *
+     *
      * @see #ensureCapacity(int)
      */
-    private void ensureCapacityHelper(int minCapacity) {
+    private void ensureCapacityHelper(int minCapacity) { // 确定是否需要扩容
         // overflow-conscious code
         if (minCapacity - elementData.length > 0)
             grow(minCapacity);
@@ -261,7 +263,7 @@ public class Vector<E>
         // overflow-conscious code
         int oldCapacity = elementData.length;
         int newCapacity = oldCapacity + ((capacityIncrement > 0) ?
-                                         capacityIncrement : oldCapacity);
+                                         capacityIncrement : oldCapacity); // 2倍扩容
         if (newCapacity - minCapacity < 0)
             newCapacity = minCapacity;
         if (newCapacity - MAX_ARRAY_SIZE > 0)

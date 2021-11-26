@@ -25,6 +25,8 @@
 
 package java.io;
 
+import sun.reflect.misc.ReflectUtil;
+
 import java.io.ObjectStreamClass.WeakClassKey;
 import java.lang.ref.ReferenceQueue;
 import java.security.AccessController;
@@ -34,9 +36,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
 import static java.io.ObjectStreamClass.processQueue;
-import java.io.SerialCallbackContext;
-import sun.reflect.misc.ReflectUtil;
 
 /**
  * An ObjectOutputStream writes primitive data types and graphs of Java objects
@@ -434,7 +435,7 @@ public class ObjectOutputStream
     }
 
     /**
-     * Write the non-static and non-transient fields of the current class to
+     * Write the non-static and non-transient fields of the current class to    将非静态字段和非transient字段写入流
      * this stream.  This may only be called from the writeObject method of the
      * class being serialized. It will throw the NotActiveException if it is
      * called otherwise.

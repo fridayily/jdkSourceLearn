@@ -333,8 +333,8 @@ public abstract class Buffer {
     }
 
     /**
-     * Flips this buffer.  The limit is set to the current position and then
-     * the position is set to zero.  If the mark is defined then it is
+     * Flips this buffer.  The limit is set to the current position and then  翻转buffer limit 设置为当前position
+     * the position is set to zero.  If the mark is defined then it is      position 设置为0
      * discarded.
      *
      * <p> After a sequence of channel-read or <i>put</i> operations, invoke

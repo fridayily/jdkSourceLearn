@@ -289,14 +289,14 @@ import java.util.function.LongConsumer;
  * primitive values occur when operating on primitive subtype specializations.
  *
  * @param <T> the type of elements returned by this Spliterator
- *
+ * 对于并行处理的能力大大增强，Spliterator就是为了并行遍历元素而设计的一个迭代器，jdk1.8中的集合框架中的数据结构都默认实现了spliterator
  * @see Collection
  * @since 1.8
  */
 public interface Spliterator<T> {
     /**
-     * If a remaining element exists, performs the given action on it,
-     * returning {@code true}; else returns {@code false}.  If this
+     * If a remaining element exists, performs the given action on it,  对单个元素执行给定动作，如果有剩下元素未处理返回true
+     * returning {@code true}; else returns {@code false}.  If this   否则返回false
      * Spliterator is {@link #ORDERED} the action is performed on the
      * next element in encounter order.  Exceptions thrown by the
      * action are relayed to the caller.
@@ -314,7 +314,7 @@ public interface Spliterator<T> {
      * throws an exception.  If this Spliterator is {@link #ORDERED}, actions
      * are performed in encounter order.  Exceptions thrown by the action
      * are relayed to the caller.
-     *
+     * 对每个剩余元素执行给定动作，依次处理，直到所有元素已被处理或被异常终止。
      * @implSpec
      * The default implementation repeatedly invokes {@link #tryAdvance} until
      * it returns {@code false}.  It should be overridden whenever possible.
@@ -363,7 +363,7 @@ public interface Spliterator<T> {
      * deviations in balance and/or overly inefficient {@code
      * trySplit} mechanics typically result in poor parallel
      * performance.
-     *
+     * 对任务分割，返回一个新对Spliterator 迭代器
      * @return a {@code Spliterator} covering some portion of the
      * elements, or {@code null} if this spliterator cannot be split
      */
@@ -392,7 +392,7 @@ public interface Spliterator<T> {
      * @return the estimated size, or {@code Long.MAX_VALUE} if infinite,
      *         unknown, or too expensive to compute.
      */
-    long estimateSize();
+    long estimateSize(); // 估算还剩下多个元素需要遍历
 
     /**
      * Convenience method that returns {@link #estimateSize()} if this
@@ -401,7 +401,7 @@ public interface Spliterator<T> {
      * The default implementation returns the result of {@code estimateSize()}
      * if the Spliterator reports a characteristic of {@code SIZED}, and
      * {@code -1} otherwise.
-     *
+     * 当迭代器拥有SIZED特征时，返回剩余元素格式，否则返回-1
      * @return the exact size, if known, else {@code -1}.
      */
     default long getExactSizeIfKnown() {
@@ -409,7 +409,7 @@ public interface Spliterator<T> {
     }
 
     /**
-     * Returns a set of characteristics of this Spliterator and its
+     * Returns a set of characteristics of this Spliterator and its  返回当前对象有哪些特征值和元素
      * elements. The result is represented as ORed values from {@link
      * #ORDERED}, {@link #DISTINCT}, {@link #SORTED}, {@link #SIZED},
      * {@link #NONNULL}, {@link #IMMUTABLE}, {@link #CONCURRENT},
@@ -438,7 +438,7 @@ public interface Spliterator<T> {
      * @implSpec
      * The default implementation returns true if the corresponding bits
      * of the given characteristics are set.
-     *
+     * 是否具有当前特征值
      * @param characteristics the characteristics to check for
      * @return {@code true} if all the specified characteristics are present,
      * else {@code false}
@@ -452,7 +452,7 @@ public interface Spliterator<T> {
      * returns that {@code Comparator}. If the source is {@code SORTED} in
      * {@linkplain Comparable natural order}, returns {@code null}.  Otherwise,
      * if the source is not {@code SORTED}, throws {@link IllegalStateException}.
-     *
+     * 如果Spliterator 的list是通过 Comparator 排序，返回 Comparator ，如果list是自然排序，返回null
      * @implSpec
      * The default implementation always throws {@link IllegalStateException}.
      *

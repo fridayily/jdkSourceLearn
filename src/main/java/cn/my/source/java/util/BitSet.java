@@ -33,11 +33,11 @@ import java.util.stream.IntStream;
 import java.util.stream.StreamSupport;
 
 /**
- * This class implements a vector of bits that grows as needed. Each
- * component of the bit set has a {@code boolean} value. The
- * bits of a {@code BitSet} are indexed by nonnegative integers.
+ * This class implements a vector of bits that grows as needed. Each 这个类实现了一个根据需要增长的位向量
+ * component of the bit set has a {@code boolean} value. The         bit的每一个组件又一个boolean 值
+ * bits of a {@code BitSet} are indexed by nonnegative integers.  BitSet的bit 可以用非负整数索引
  * Individual indexed bits can be examined, set, or cleared. One
- * {@code BitSet} may be used to modify the contents of another
+ * {@code BitSet} may be used to modify the contents of another   一个BitSet 可以通过 AND OR XOR 改变另一个Bitset
  * {@code BitSet} through logical AND, logical inclusive OR, and
  * logical exclusive OR operations.
  *
@@ -64,12 +64,12 @@ import java.util.stream.StreamSupport;
  */
 public class BitSet implements Cloneable, java.io.Serializable {
     /*
-     * BitSets are packed into arrays of "words."  Currently a word is
+     * BitSets are packed into arrays of "words."  Currently a word is    bitset 由long 型的 array 组成，需要6 地址bit
      * a long, which consists of 64 bits, requiring 6 address bits.
-     * The choice of word size is determined purely by performance concerns.
+     * The choice of word size is determined purely by performance concerns.   word大小的选择完全由性能考虑决定
      */
     private final static int ADDRESS_BITS_PER_WORD = 6;
-    private final static int BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD;
+    private final static int  BITS_PER_WORD = 1 << ADDRESS_BITS_PER_WORD; // 每一个word 右64位
     private final static int BIT_INDEX_MASK = BITS_PER_WORD - 1;
 
     /* Used to shift left or right for a partial word mask */
@@ -83,7 +83,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * significant bit and 63 refers to the most significant bit).
      */
     private static final ObjectStreamField[] serialPersistentFields = {
-        new ObjectStreamField("bits", long[].class),
+        new ObjectStreamField("bits", long[].class), // 序列化字段的命名
     };
 
     /**
@@ -109,11 +109,11 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * Given a bit index, return word index containing it.
      */
     private static int wordIndex(int bitIndex) {
-        return bitIndex >> ADDRESS_BITS_PER_WORD;
+        return bitIndex >> ADDRESS_BITS_PER_WORD; // 右移运算 除以2^6  如要检索的第  60 位 返回0  检索第65 位 返回1
     }
 
     /**
-     * Every public method must preserve these invariants.
+     * Every public method must preserve these invariants.  每一个公共方法必须保持不变性
      */
     private void checkInvariants() {
         assert(wordsInUse == 0 || words[wordsInUse - 1] != 0);
@@ -127,7 +127,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * less than or equal to the current value of wordsInUse!
      */
     private void recalculateWordsInUse() {
-        // Traverse the bitset until a used word is found
+        // Traverse the bitset until a used word is found  遍历bitset 直到 一个 被使用的word 被发现
         int i;
         for (i = wordsInUse-1; i >= 0; i--)
             if (words[i] != 0)
@@ -153,7 +153,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * @throws NegativeArraySizeException if the specified initial size
      *         is negative
      */
-    public BitSet(int nbits) {
+    public BitSet(int nbits) {  // 根据nbits 确定 words 的个数
         // nbits can't be negative; size 0 is OK
         if (nbits < 0)
             throw new NegativeArraySizeException("nbits < 0: " + nbits);
@@ -170,7 +170,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      * Creates a bit set using words as the internal representation.
      * The last word (if there is one) must be non-zero.
      */
-    private BitSet(long[] words) {
+    private BitSet(long[] words) { // 构造函数，用words 初始化
         this.words = words;
         this.wordsInUse = words.length;
         checkInvariants();
@@ -194,7 +194,7 @@ public class BitSet implements Cloneable, java.io.Serializable {
      */
     public static BitSet valueOf(long[] longs) {
         int n;
-        for (n = longs.length; n > 0 && longs[n - 1] == 0; n--)
+        for (n = longs.length; n > 0 && longs[n - 1] == 0; n--) // 倒序 碰到第一个不为0的数就跳出循环，减少了多余的存储
             ;
         return new BitSet(Arrays.copyOf(longs, n));
     }

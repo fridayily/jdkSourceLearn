@@ -42,7 +42,7 @@ package java.util;
  * implementations place no fixed limits on the number of elements
  * they may contain, but this interface supports capacity-restricted
  * deques as well as those with no fixed size limit.
- *
+ *                  双端队列是限定插入和删除操作在表的两端进行的线性表，是一种具有队列和栈的性质的数据结构
  * <p>This interface defines methods to access the elements at both
  * ends of the deque.  Methods are provided to insert, remove, and
  * examine the element.  Each of these methods exists in two forms:

@@ -3,109 +3,114 @@ package cn.my.source.java.util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 class ArrayListTest {
 
-  @BeforeEach
-  void setUp() {}
+    @BeforeEach
+    void setUp() {
+    }
 
-  @Test
-  void trimToSize() {}
 
-  @Test
-  void ensureCapacity() {}
+    @Test
+    void getClassDeclareFields() {
+        System.out.println("Declared fields: ");
+        Field[] fields = ArrayList.class.getDeclaredFields(); // 获取一个类的所有成员变量，不包括基类
+        for (int i = 0; i < fields.length; i++) {
+            System.out.println(fields[i].getName());
+        }
+        System.out.println("-------------------------");
 
-  @Test
-  void size() {}
+        System.out.println("Public fields: ");
+        fields = ArrayList.class.getFields(); // 获取一个类的 public 成员变量 包括基类
+        for(int i = 0; i < fields.length; i++) {
+            System.out.println(fields[i].getName()); // 此处结果是color, location
+        }
 
-  @Test
-  void isEmpty() {}
+    }
 
-  @Test
-  void contains() {}
 
-  @Test
-  void indexOf() {}
+    @Test
+    void size() {
+        // 使用无参构造器创建 Arraylist 对象
+        ArrayList list = new ArrayList(); // 使用无参构造函数，初始elementData容量为0，第一次添加，扩容为 10，再次扩容
+        // 则扩容为element 的1.5 倍
+        // 如果使用有参构造函数,则初始化elementData指定大小，如需扩容扩容为elementData的1.5倍
 
-  @Test
-  void lastIndexOf() {}
+        for (int i = 1; i <= 11; i++) {
+            list.add(i);
+            System.out.println(list.size());
+            int length = getArrayListCapacity(list);
+            System.out.println("list 长度："+ length);
+        }
 
-  @Test
-  void testClone() {}
 
-  @Test
-  void toArray() {}
 
-  @Test
-  void testToArray() {}
+    }
 
-  @Test
-  void elementData() {}
 
-  @Test
-  void get() {}
+    @Test
+    void add() {
 
-  @Test
-  void set() {}
+        // 使用无参构造器创建 Arraylist 对象
+        ArrayList list = new ArrayList(); // 使用无参构造函数，初始elementData容量为0，第一次添加，扩容为 10，再次扩容
+        // 则扩容为element 的1.5 倍
+        // 如果使用有参构造函数,则初始化elementData指定大小，如需扩容扩容为elementData的1.5倍
 
-  @Test
-  void add() {}
+        for (int i = 1; i <= 10; i++) {
+            list.add(i);
+        }
+        for (int i = 11; i < 15; i++) {
+            list.add(i);
+        }
+        list.add(100);
+        list.add(200);
+        list.add(null);
 
-  @Test
-  void testAdd() {}
+        System.out.println("list " + list);
+    }
 
-  @Test
-  void remove() {}
 
-  @Test
-  void testRemove() {}
+    public static int getArrayListCapacity(ArrayList<?> arrayList) {
+        Class<ArrayList> arrayListClass = ArrayList.class;
+        try {
+            //获取 elementData 字段
+            Field field = arrayListClass.getDeclaredField("elementData");
+            //开始访问权限
+            field.setAccessible(true);
+            //把示例传入get，获取实例字段elementData的值
+            Object[] objects = (Object[])field.get(arrayList);
+            //返回当前ArrayList实例的容量值
+            return objects.length;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
-  @Test
-  void clear() {}
+    @Test
+    void trimToSize() {
 
-  @Test
-  void addAll() {}
+        ArrayList list = new ArrayList();
+        for (int i = 1; i <= 10; i++) {
+            list.add(i);
+        }
+        list.add(11);
+        System.out.println("list size " + list.size() +  " list length " + getArrayListCapacity(list));
+        list.trimToSize();
+        System.out.println("list size " + list.size() +  " list length " + getArrayListCapacity(list));
 
-  @Test
-  void testAddAll() {}
 
-  @Test
-  void removeRange() {}
 
-  @Test
-  void removeAll() {}
+    }
 
-  @Test
-  void retainAll() {}
+    @Test
+    void ensureCapacity() {
+        ArrayList list = new ArrayList();
+        for (int i = 1; i <= 10; i++) {
+            list.add(i);
+        }
 
-  @Test
-  void listIterator() {}
-
-  @Test
-  void testListIterator() {}
-
-  @Test
-  void iterator() {}
-
-  @Test
-  void subList() {}
-
-  @Test
-  void subListRangeCheck() {}
-
-  @Test
-  void forEach() {}
-
-  @Test
-  void spliterator() {}
-
-  @Test
-  void removeIf() {}
-
-  @Test
-  void replaceAll() {}
-
-  @Test
-  void sort() {}
+    }
 }

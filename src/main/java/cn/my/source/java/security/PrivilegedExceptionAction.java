@@ -27,7 +27,7 @@ package java.security;
 
 
 /**
- * A computation to be performed with privileges enabled, that throws one or
+ * A computation to be performed with privileges enabled, that throws one or  优先级使能 时执行计算
  * more checked exceptions.  The computation is performed by invoking
  * {@code AccessController.doPrivileged} on the
  * {@code PrivilegedExceptionAction} object.  This interface is
