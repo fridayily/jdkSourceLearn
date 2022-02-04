@@ -304,7 +304,7 @@ public class ArrayList<E> extends AbstractList<E>
      */
     public boolean contains(Object o) {
         return indexOf(o) >= 0;
-    }
+    } //  通过调用 indexOf 方法返回的下标来判断是否存在该元素
 
     /**
      * Returns the index of the first occurrence of the specified element
@@ -316,10 +316,10 @@ public class ArrayList<E> extends AbstractList<E>
     public int indexOf(Object o) {
         if (o == null) {  // 指定元素为空
             for (int i = 0; i < size; i++)
-                if (elementData[i]==null)
+                if (elementData[i]==null) // 从头遍历所有元素，null 用 == 判断，返回第一次 null 出现的下标
                     return i;
         } else { // 指定元素非空
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < size; i++)  // 从头遍历所有元素，使用 equals 判断，返回第一次该元素出现的下标
                 if (o.equals(elementData[i]))
                     return i;
         }
@@ -327,7 +327,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Returns the index of the last occurrence of the specified element  从后往前遍历
+     * Returns the index of the last occurrence of the specified element  返回指定元素在集合中最后一次出现的索引，如果集合不包含该元素，则返回-1
      * in this list, or -1 if this list does not contain the element.
      * More formally, returns the highest index <tt>i</tt> such that
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
@@ -335,11 +335,11 @@ public class ArrayList<E> extends AbstractList<E>
      */
     public int lastIndexOf(Object o) {
         if (o == null) {
-            for (int i = size-1; i >= 0; i--)
+            for (int i = size-1; i >= 0; i--) // 从后往前遍历所有元素，null 用 == 判断，返回第一次 null 出现的下标，也就是最后一次出现
                 if (elementData[i]==null)
                     return i;
         } else {
-            for (int i = size-1; i >= 0; i--)
+            for (int i = size-1; i >= 0; i--) // 从后往前遍历所有元素，使用 equals 判断，返回第一次该元素出现的下标，也就是最后一次出现
                 if (o.equals(elementData[i]))
                     return i;
         }
@@ -365,8 +365,8 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Returns an array containing all of the elements in this list
-     * in proper sequence (from first to last element).
+     * Returns an array containing all of the elements in this list  以正确的顺序（从第一个元素到最后一个元素）返回一个包含此集合中所有元素的数组。
+     * in proper sequence (from first to last element).  此方法充当基于数组的 API 和基于集合的 API 之间的桥梁。
      *
      * <p>The returned array will be "safe" in that no references to it are
      * maintained by this list.  (In other words, this method must allocate
@@ -697,7 +697,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Retains only the elements in this list that are contained in the
+     * Retains only the elements in this list that are contained in the      原list 中只保留参数中集合的元素
      * specified collection.  In other words, removes from this list all
      * of its elements that are not contained in the specified collection.
      * @param c collection containing elements to be retained in this list
@@ -746,9 +746,9 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
-     * Save the state of the <tt>ArrayList</tt> instance to a stream (that
+     * Save the state of the <tt>ArrayList</tt> instance to a stream (that    保存arraylist实例状态到流
      * is, serialize it).
-     *
+     * 在new一个ArrayList对象时，默认是开辟一个长度为10的对象数组，如果只存入几个对象（不到默认的10个），如果采用默认序列化，则会将其余为null也序列化到文件中
      * @serialData The length of the array backing the <tt>ArrayList</tt>
      *             instance is emitted (int), followed by all of its elements
      *             (each an <tt>Object</tt>) in the proper order.
@@ -762,7 +762,7 @@ public class ArrayList<E> extends AbstractList<E>
         // Write out size as capacity for behavioural compatibility with clone()
         s.writeInt(size);
 
-        // Write out all elements in the proper order.
+        // Write out all elements in the proper order.   手动序列化
         for (int i=0; i<size; i++) {
             s.writeObject(elementData[i]);
         }
@@ -778,21 +778,21 @@ public class ArrayList<E> extends AbstractList<E>
      */
     private void readObject(java.io.ObjectInputStream s)
             throws java.io.IOException, ClassNotFoundException {
-        elementData = EMPTY_ELEMENTDATA;
+        elementData = EMPTY_ELEMENTDATA;  // 初始化elementData
 
-        // Read in size, and any hidden stuff
+        // Read in size, and any hidden stuff 默认的反序列化方法（读入非 transient 和非 static 修饰属性，size 属性会被读入）
         s.defaultReadObject();
 
-        // Read in capacity
+        // Read in capacity  读入集合的长度，可以忽略，只是为了和写出对应
         s.readInt(); // ignored
 
         if (size > 0) {
             // be like clone(), allocate array based upon size not capacity
-            int capacity = calculateCapacity(elementData, size);
-            SharedSecrets.getJavaOISAccess().checkArray(s, Object[].class, capacity);
-            ensureCapacityInternal(size);
+            int capacity = calculateCapacity(elementData, size); // 计算所需要的最小容量
+            SharedSecrets.getJavaOISAccess().checkArray(s, Object[].class, capacity); // 检查集合的容量和类型
+            ensureCapacityInternal(size);  // 根据 size 的大小进行扩容检查
 
-            Object[] a = elementData;
+            Object[] a = elementData; // 这里elementData已经初始化为空数组
             // Read in all elements in the proper order.
             for (int i=0; i<size; i++) {
                 a[i] = s.readObject();
@@ -845,18 +845,18 @@ public class ArrayList<E> extends AbstractList<E>
      * An optimized version of AbstractList.Itr
      */
     private class Itr implements Iterator<E> {
-        int cursor;       // index of next element to return
-        int lastRet = -1; // index of last element returned; -1 if no such
-        int expectedModCount = modCount;
+        int cursor;       // index of next element to return  下一个要返回的元素的索引
+        int lastRet = -1; // index of last element returned; -1 if no such 返回最后一个元素的索引，没有则返回 -1
+        int expectedModCount = modCount; // 构建迭代器对象时记录 modCount
 
         Itr() {}
 
         public boolean hasNext() {
             return cursor != size;
-        }
+        } // 判断是否有下一个元素
 
         @SuppressWarnings("unchecked")
-        public E next() {
+        public E next() { // 获取下一个元素
             checkForComodification();
             int i = cursor;
             if (i >= size)
@@ -877,7 +877,7 @@ public class ArrayList<E> extends AbstractList<E>
                 ArrayList.this.remove(lastRet);
                 cursor = lastRet;
                 lastRet = -1;
-                expectedModCount = modCount;
+                expectedModCount = modCount; // // 将删除后的 modCount 赋给 expectedModCount
             } catch (IndexOutOfBoundsException ex) {
                 throw new ConcurrentModificationException();
             }
@@ -906,7 +906,7 @@ public class ArrayList<E> extends AbstractList<E>
         }
 
         final void checkForComodification() {
-            if (modCount != expectedModCount)
+            if (modCount != expectedModCount) // 检测 ArrayList 中的 modCount 和当前迭代器对象的 expectedModCount 是否一致
                 throw new ConcurrentModificationException();
         }
     }
@@ -1001,17 +1001,17 @@ public class ArrayList<E> extends AbstractList<E>
      * @throws IndexOutOfBoundsException {@inheritDoc}
      * @throws IllegalArgumentException {@inheritDoc}
      */
-    public List<E> subList(int fromIndex, int toIndex) {
-        subListRangeCheck(fromIndex, toIndex, size);
-        return new SubList(this, 0, fromIndex, toIndex);
+    public List<E> subList(int fromIndex, int toIndex) {  // 返回集合中指定 [fromIndex, toIndex) 位置元素构成的集合，如果 fromIndex == toIndex，返回空集合
+        subListRangeCheck(fromIndex, toIndex, size);      // 检测子集的下标是否越界
+        return new SubList(this, 0, fromIndex, toIndex); // 通过构造 SubList 返回，SubList 和 ArrayList 引用是同一个对象
     }
 
-    static void subListRangeCheck(int fromIndex, int toIndex, int size) {
-        if (fromIndex < 0)
+    static void subListRangeCheck(int fromIndex, int toIndex, int size) {  // 检测子集的下标是否越界
+        if (fromIndex < 0) // 检测 fromIndex 是否小于 0
             throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
-        if (toIndex > size)
+        if (toIndex > size) // 检测 toIndex 是否大于 size
             throw new IndexOutOfBoundsException("toIndex = " + toIndex);
-        if (fromIndex > toIndex)
+        if (fromIndex > toIndex) // 检测 fromIndex 是否大于 toIndex
             throw new IllegalArgumentException("fromIndex(" + fromIndex +
                     ") > toIndex(" + toIndex + ")");
     }
@@ -1096,7 +1096,7 @@ public class ArrayList<E> extends AbstractList<E>
             return listIterator();
         }
 
-        public ListIterator<E> listIterator(final int index) {
+        public ListIterator<E> listIterator(final int index) {  // 从集合中的指定位置开始，以适当的顺序返回此集合中元素的 list 迭代器。
             checkForComodification();
             rangeCheckForAdd(index);
             final int offset = this.offset;

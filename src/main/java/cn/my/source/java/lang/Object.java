@@ -42,7 +42,7 @@ public class Object {
     }
 
     /**
-     * Returns the runtime class of this {@code Object}. The returned
+     * Returns the runtime class of this {@code Object}. The returned  返回对象运行期间的class
      * {@code Class} object is the object that is locked by {@code
      * static synchronized} methods of the represented class.
      *
@@ -212,17 +212,17 @@ public class Object {
     protected native Object clone() throws CloneNotSupportedException;
 
     /**
-     * Returns a string representation of the object. In general, the
+     * Returns a string representation of the object. In general, the  返回代表 object 的字符串
      * {@code toString} method returns a string that
-     * "textually represents" this object. The result should
+     * "textually represents" this object. The result should  结果应该简洁并且富有信息来表示以至于方便理解
      * be a concise but informative representation that is easy for a
      * person to read.
      * It is recommended that all subclasses override this method.
      * <p>
-     * The {@code toString} method for class {@code Object}
+     * The {@code toString} method for class {@code Object}   tostring 方法返回一个包含 实例对象的类名
      * returns a string consisting of the name of the class of which the
      * object is an instance, the at-sign character `{@code @}', and
-     * the unsigned hexadecimal representation of the hash code of the
+     * the unsigned hexadecimal representation of the hash code of the  无符号的十六进制 表示 对象的 hashcode
      * object. In other words, this method returns a string equal to the
      * value of:
      * <blockquote>

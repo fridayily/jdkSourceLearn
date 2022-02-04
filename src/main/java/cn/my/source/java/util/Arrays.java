@@ -1190,7 +1190,7 @@ public class Arrays {
      * Cannot be a static boolean in the enclosing class due to
      * circular dependencies. To be removed in a future release.
      */
-    static final class LegacyMergeSort {
+    static final class LegacyMergeSort { // 归并排序  legacy 遗留的，已过时但因使用范围广而难以替代的
         private static final boolean userRequested =
             java.security.AccessController.doPrivileged(
                 new sun.security.action.GetBooleanAction(
@@ -1307,7 +1307,7 @@ public class Arrays {
     public static void sort(Object[] a, int fromIndex, int toIndex) {
         rangeCheck(a.length, fromIndex, toIndex);
         if (LegacyMergeSort.userRequested)
-            legacyMergeSort(a, fromIndex, toIndex);
+            legacyMergeSort(a, fromIndex, toIndex); // 兼容1.6 之前的旧版本
         else
             ComparableTimSort.sort(a, fromIndex, toIndex, null, 0, 0);
     }
@@ -1321,7 +1321,7 @@ public class Arrays {
 
     /**
      * Tuning parameter: list size at or below which insertion sort will be
-     * used in preference to mergesort.
+     * used in preference to mergesort.  调优参数，list 的size<= 该参数时调用插入排序来对归并排序进行优化
      * To be removed in a future release.
      */
     private static final int INSERTIONSORT_THRESHOLD = 7;
@@ -1343,7 +1343,7 @@ public class Arrays {
         int length = high - low;
 
         // Insertion sort on smallest arrays
-        if (length < INSERTIONSORT_THRESHOLD) {
+        if (length < INSERTIONSORT_THRESHOLD) {  //数组大小如果小于7，则使用插入排序
             for (int i=low; i<high; i++)
                 for (int j=i; j>low &&
                          ((Comparable) dest[j-1]).compareTo(dest[j])>0; j--)
@@ -1351,7 +1351,7 @@ public class Arrays {
             return;
         }
 
-        // Recursively sort halves of dest into src
+        // Recursively sort halves of dest into src  利用分治的思想，进行拆分，递归调用插入排序
         int destLow  = low;
         int destHigh = high;
         low  += off;

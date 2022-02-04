@@ -159,7 +159,7 @@ package java.io;
  * classes cannot declare an explicit serialVersionUID, so they always have
  * the default computed value, but the requirement for matching
  * serialVersionUID values is waived for array classes.
- * 如果一个 可序列化对象 没有明确的申明 serialVersionUID，
+ * 如果一个 可序列化对象 没有明确的申明 serialVersionUID，序列化运行时会jis
  *
  * @author  unascribed
  * @see java.io.ObjectOutputStream

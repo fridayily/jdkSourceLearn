@@ -3,10 +3,7 @@ package cn.my.source.java.lang;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class StringTest {
     String st;
@@ -16,6 +13,13 @@ class StringTest {
         this.st = "abc12345AAb1";
 
 
+
+
+    }
+
+    @Test
+    void init()
+    {
         // public String():空构造
         String s1 = new String();
         System.out.println("s1:" + s1);
@@ -59,7 +63,6 @@ class StringTest {
         String s7 = "abcde";
         System.out.println("s7:"+s7);
         System.out.println("s7.length():"+s7.length());
-
     }
 
 
@@ -68,13 +71,19 @@ class StringTest {
     void changliang(){
         String s1 = "Hello";
         String s2 = "Hello";
-        String s3 = "Hel" + "lo";
-        String s4 = "Hel" + new String("lo");
-        String s5 = new String("Hello");
+        String s3 = "Hel" + "lo"; // 首先会在常量内存区创建 hel 和 lo 字符串两个对象，然后在开辟一个空间存放连接后的值 （在编译期间进行优化）
+        String s4 = "Hel" + new String("lo"); // 两个对象进行相加，不会优化，生成新的对象
+
+
+        String s5 = new String("Hello"); //
+
+        //在调用s5.intern()方法的时候会返回”Hello”，但是这个方法会首先检查字符串常量池中是否有”Hello”这个字符串，
+        // 如果存在则返回这个字符串的引用，否则就将这个字符串添加到字符串常量池中，然会返回这个字符串的引用。(重要)
+
         String s6 = s5.intern();
         String s7 = "H";
         String s8 = "ello";
-        String s9 = s7 + s8;
+        String s9 = s7 + s8; // 创建新的对象  这里两个都是静态字符串会把结果放入常量池  但s7 s8 字符串的引用
 
         System.out.println(s1 == s2);  // true
         System.out.println(s1 == s3);  // true
@@ -550,7 +559,7 @@ class StringTest {
         String s = new String(arr,0, arr.length); // "hello world"
         arr[0] = 'a'; // replace the first character with 'a'
 
-        System.out.println(s); // aello world
+        System.out.println("s " + s); // hello world
         System.out.println(arr); // aello world
     }
 }

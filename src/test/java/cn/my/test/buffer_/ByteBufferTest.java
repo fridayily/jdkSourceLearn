@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.nio.ByteBuffer;
 
-public class ByteBufferApp {
+public class ByteBufferTest {
     @Test
     public void testBuffer() {
         // 初始化一个大小为6的ByteBuffer

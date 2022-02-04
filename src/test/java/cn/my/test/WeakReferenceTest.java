@@ -20,29 +20,70 @@ class WeakReferenceTest {
     }
 
     @Test
-    void weakreference(){
-        WeakReference<Car> weakReference = new WeakReference<>(new Car());
+    void weakreference() {
+        WeakReference<Car> weakCar = new WeakReference<>(new Car());
         Car car = new Car();
-        System.out.println("weakReference " +weakReference);
-        System.out.println("weakReference.get() " +weakReference.get());
-        System.out.println("car " +car);
+        System.out.println("弱引用对象 weakCar " + weakCar);
+        System.out.println("弱引用对象get有值表示对象没有被回收 weakCar.get() " + weakCar.get());
+        System.out.println("强引用对象car有值表示强引用存在 " + car);
         System.gc();
-        System.out.println("weakReference.get() " +weakReference.get()); // gc 后有被回收
-        System.out.println("car " +car); // gc 后没有被回收
+        System.out.println("弱引用GC后，弱引用对象被回收 weakCar.get() " + weakCar.get()); // gc 后有被回收
+        System.out.println("强引用对象car没有回收 " + car); // gc 后没有被回收
 
+    }
+
+    @Test
+    void weakreference2() {
+        Car car = new Car();
+
+        WeakReference<Car> weakCar = new WeakReference<>(new Car());
+        int i = 0;
+
+        while (true) {
+            System.out.println("here is the strong reference 'car' " + car);//use the strong reference in the while loop
+            if (weakCar.get() != null) {
+                i++;
+                System.out.println("Object is alive for " + i + " loops - " + weakCar);
+            } else {
+                System.out.println("Object has been collected.");
+                break;
+            }
+
+
+        }
     }
 
 
     @Test
-    void weakReferenceQueue(){
+    void weakreference3() {
+        Car car = new Car();
+        WeakReference<Car> weakCar = new WeakReference<Car>(car);
+
+        int i=0;
+
+        while(true){
+            if(weakCar.get()!=null){
+                i++;
+                System.out.println("Object is alive for "+i+" loops - "+weakCar);
+            }else{
+                System.out.println("Object has been collected.");
+                break;
+            }
+        }
+    }
+
+
+    @Test
+    void weakReferenceQueue() {
         // 这个ReferenceQueue的主要作用是存放那些已经被gc的reference
         ReferenceQueue<Car> referenceQueue = new ReferenceQueue<>();
-        WeakReference<Car> weakReference1 = new WeakReference<>(new Car(),referenceQueue);
-        System.out.println("weakReference " + weakReference1);
-        System.out.println("weakReference.get() " +weakReference1.get());
-        System.gc();
-        // 执行gc后 weakReference1 被放入referenceQueue中
-        System.out.println("weakReference.get() " +weakReference1.get()); // gc 后有被回收
+        WeakReference<Car> weakCar = new WeakReference<>(new Car(), referenceQueue);
+        System.out.println("weakCar=" + weakCar);
+        System.out.println("weakCar.get()=" + weakCar.get());
+        System.gc(); //告诉垃圾收集器打算进行垃圾收集，而垃圾收集器进不进行收集是不确定的
+        System.runFinalization(); //强制调用已经失去引用的对象的finalize方法
+        System.out.println("执行gc后 weakCar 被放入referenceQueue中  weakCar.get()=" + weakCar.get()); // gc 后有被回收
+        System.out.println("弱引用队列存放了被销毁的 弱引用对象 " + referenceQueue.poll());
     }
 
 
@@ -52,11 +93,13 @@ class WeakReferenceTest {
 class Car {
     String name;
     int age;
-    public Car(){
+
+    public Car() {
         System.out.println("this is Car");
         this.name = "this is Car";
     }
-    public Car(String name,int age){
+
+    public Car(String name, int age) {
         this.name = name;
         this.age = age;
     }

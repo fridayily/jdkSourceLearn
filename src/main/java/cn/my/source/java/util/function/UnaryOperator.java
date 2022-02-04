@@ -25,7 +25,7 @@
 package java.util.function;
 
 /**
- * Represents an operation on a single operand that produces a result of the
+ * Represents an operation on a single operand that produces a result of the  表示对单个操作数操作。该操作数生成结果与输入参数类型相同
  * same type as its operand.  This is a specialization of {@code Function} for
  * the case where the operand and result are of the same type.
  *

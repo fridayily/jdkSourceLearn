@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 class ArrayListTest {
 
@@ -103,6 +104,8 @@ class ArrayListTest {
 
 
 
+
+
     }
 
     @Test
@@ -111,6 +114,49 @@ class ArrayListTest {
         for (int i = 1; i <= 10; i++) {
             list.add(i);
         }
+
+    }
+
+    @Test
+    void sort() {
+
+        ArrayList list = new ArrayList();
+        list.add("A");
+        list.add("C");
+        list.add("B");
+        System.out.println("list "+ list);
+
+
+        list.sort(Comparator.reverseOrder());
+
+        System.out.println("list "+ list);
+    }
+
+    @Test
+    void replaceAll(){
+        ArrayList list = new ArrayList();
+        list.add("A");
+        list.add("C");
+        list.add("B");
+        System.out.println("list "+ list);
+
+        list.replaceAll(a->a+"_list");
+        System.out.println("list "+ list);
+
+    }
+
+    @Test
+    void removeIf() {
+        ArrayList list = new ArrayList();
+        list.add("A");
+        list.add("C");
+        list.add(null);
+        list.add("B");
+        list.add(null);
+        System.out.println("list "+ list);
+
+        list.removeIf(x -> x==null); // 去掉空值
+        System.out.println("list "+ list);
 
     }
 }

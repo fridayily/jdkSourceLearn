@@ -963,7 +963,7 @@ public final class String
      * true} if and only if the argument is not {@code null} and is a {@code
      * String} object that represents the same sequence of characters as this
      * object.
-     *
+     *  equals是判断两个变量或者实例指向同一个内存空间的值是不是相同  ==是判断两个变量或者实例是不是指向同一个内存空间
      * @param  anObject
      *         The object to compare this {@code String} against
      *

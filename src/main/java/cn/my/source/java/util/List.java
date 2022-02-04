@@ -378,7 +378,7 @@ public interface List<E> extends Collection<E> {
     boolean retainAll(Collection<?> c);
 
     /**
-     * Replaces each element of this list with the result of applying the
+     * Replaces each element of this list with the result of applying the   对list的每个元素进行apply()计算，并替换原来的元素
      * operator to that element.  Errors or runtime exceptions thrown by
      * the operator are relayed to the caller.
      *
