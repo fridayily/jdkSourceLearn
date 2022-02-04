@@ -71,6 +71,21 @@ class SerializeTester {
 
 
     @Test
+    void SerialProcessTest() throws IOException {
+        System.out.println("序列化过程测试");
+        File file = new File("person.txt");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream( new FileOutputStream(file));
+        Person person = new Person();
+        person.setAge(25);
+        person.setName("zhangsan");
+        objectOutputStream.writeObject(person);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+
+    }
+}
+
+    @Test
     void writeObjectTest() throws FileNotFoundException {
         System.out.println("测试对序列化后的对象重新序列化");
 
@@ -110,7 +125,33 @@ class SerializeTester {
         objectOutputStream.close();
 
     }
-}
+
+
+    @Test
+    void writeObjectTest() throws FileNotFoundException {
+        System.out.println("测试对序列化后的对象重新序列化");
+
+
+        File file = new File("teacher.txt");
+        try (ObjectOutputStream oos1 = new ObjectOutputStream(new FileOutputStream(file))) {
+            Person person = new Person("路飞", 20);
+            Teacher t1 = new Teacher("雷利", person);
+            Teacher t2 = new Teacher("红发香克斯", person);
+            //依次将4个对象写入输入流
+            oos1.writeObject(t1); // 新的序列化
+            oos1.writeObject(t2); // 新的序列化
+            oos1.writeObject(person); // 输出编码，因为person 在 他 序列化过
+            oos1.writeObject(t2); // 输出编码
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*
+         * 1.所有保存到磁盘到对象都有一个序列化编码
+         * 2.当程序视图序列化一个对象时，会先检查此对象是否已经序列化过，只有此对象从未被序列化过，才会将此对象序列户为字节序列输出
+         * 3。如果此对象已经序列化过，则直接输出编号即可
+         *
+         * */
+    }
 
 
 class SessionDTO implements Serializable {

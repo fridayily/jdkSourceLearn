@@ -17,6 +17,7 @@ public class SetMethod {
         set.add("jack");
         set.add(null);
         set.add(null);
+
         set.remove(null);
 
         for (int i = 0; i < 10; i++) {
@@ -24,6 +25,9 @@ public class SetMethod {
 
         }
 
+        // 遍历
+        // 1.迭代器
+        System.out.println("====使用迭代器====");
         Iterator iterator = set.iterator();
         while (iterator.hasNext()) {
             Object next =  iterator.next();
@@ -31,7 +35,7 @@ public class SetMethod {
             
         }
         // 增强for
-
+        System.out.println("====增强for====");
         for (Object o : set) {
             System.out.println("o= "+ o);
 
