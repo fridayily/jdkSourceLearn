@@ -16,11 +16,11 @@
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/com/sun/image/codec/jpeg" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/java/security" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/javax/security" />
-      <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/com/sun/jmx/snmp" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/com/sun/org/apache/xml/internal/security" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/java/util/jar" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/cn/my/source/java/util/zip" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -21,26 +21,26 @@ class WeakReferenceTest {
 
     @Test
     void weakreference() {
-        WeakReference<Car> weakCar = new WeakReference<>(new Car());
-        Car car = new Car();
+        WeakReference<Card> weakCar = new WeakReference<>(new Card());
+        Card card = new Card();
         System.out.println("弱引用对象 weakCar " + weakCar);
         System.out.println("弱引用对象get有值表示对象没有被回收 weakCar.get() " + weakCar.get());
-        System.out.println("强引用对象car有值表示强引用存在 " + car);
+        System.out.println("强引用对象car有值表示强引用存在 " + card);
         System.gc();
         System.out.println("弱引用GC后，弱引用对象被回收 weakCar.get() " + weakCar.get()); // gc 后有被回收
-        System.out.println("强引用对象car没有回收 " + car); // gc 后没有被回收
+        System.out.println("强引用对象car没有回收 " + card); // gc 后没有被回收
 
     }
 
     @Test
     void weakreference2() {
-        Car car = new Car();
+        Card card = new Card();
 
-        WeakReference<Car> weakCar = new WeakReference<>(new Car());
+        WeakReference<Card> weakCar = new WeakReference<>(new Card());
         int i = 0;
 
         while (true) {
-            System.out.println("here is the strong reference 'car' " + car);//use the strong reference in the while loop
+            System.out.println("here is the strong reference 'car' " + card);//use the strong reference in the while loop
             if (weakCar.get() != null) {
                 i++;
                 System.out.println("Object is alive for " + i + " loops - " + weakCar);
@@ -56,8 +56,8 @@ class WeakReferenceTest {
 
     @Test
     void weakreference3() {
-        Car car = new Car();
-        WeakReference<Car> weakCar = new WeakReference<Car>(car);
+        Card card = new Card();
+        WeakReference<Card> weakCar = new WeakReference<Card>(card);
 
         int i=0;
 
@@ -76,8 +76,8 @@ class WeakReferenceTest {
     @Test
     void weakReferenceQueue() {
         // 这个ReferenceQueue的主要作用是存放那些已经被gc的reference
-        ReferenceQueue<Car> referenceQueue = new ReferenceQueue<>();
-        WeakReference<Car> weakCar = new WeakReference<>(new Car(), referenceQueue);
+        ReferenceQueue<Card> referenceQueue = new ReferenceQueue<>();
+        WeakReference<Card> weakCar = new WeakReference<>(new Card(), referenceQueue);
         System.out.println("weakCar=" + weakCar);
         System.out.println("weakCar.get()=" + weakCar.get());
         System.gc(); //告诉垃圾收集器打算进行垃圾收集，而垃圾收集器进不进行收集是不确定的

@@ -25,8 +25,9 @@
 
 package java.util;
 
-import java.io.InvalidObjectException;
 import sun.misc.SharedSecrets;
+
+import java.io.InvalidObjectException;
 
 /**
  * This class implements the <tt>Set</tt> interface, backed by a hash table

@@ -3,7 +3,6 @@ package cn.my.test.collection_;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 
 public class CollectionIterator {
     public static void main(String[] args) {
@@ -24,6 +23,7 @@ public class CollectionIterator {
             Object obj = iterator.next();
             System.out.println("obj"+ obj);
         }
+
         // 快捷键 itit
         // win + J 提示快捷键
 //        while (iterator.hasNext()) {

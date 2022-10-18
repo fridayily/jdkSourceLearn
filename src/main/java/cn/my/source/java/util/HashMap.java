@@ -25,6 +25,8 @@
 
 package java.util;
 
+import sun.misc.SharedSecrets;
+
 import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.Serializable;
@@ -34,7 +36,6 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import sun.misc.SharedSecrets;
 
 /**
  * Hash table based implementation of the <tt>Map</tt> interface.  This
@@ -624,7 +625,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      */
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                    boolean evict) {
-        Node<K,V>[] tab; Node<K,V> p; int n, i;
+        Node<K,V>[] tab; Node<K,V> p; int n, i;  // 定义了辅助变量
         if ((tab = table) == null || (n = tab.length) == 0)
             n = (tab = resize()).length; // 1. 空表的话，再去 resize() 进行初始化
         if ((p = tab[i = (n - 1) & hash]) == null) // (n - 1) & hash 就是哈希寻桶位置的实现 如果桶中不包含键值对节点引用，则将新键值对节点的引用存入桶中即可
@@ -692,7 +693,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
             newCap = oldThr;  // 初始化时，newCap = threshold = tableSizeFor(initialCapacity) 将 threshold 的值赋值给 newCap,HashMap 使用 threshold 变量暂时保存 initialCapacity 参数的值
         else {               // zero initial threshold signifies using defaults  // 当是新表时进行初始化操作
             newCap = DEFAULT_INITIAL_CAPACITY; // 默认的初始化容量  调用无参构造方法时，桶数组容量为默认容量， oldCap == 0 && oldThr == 0
-            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY); // 初始阈值= 16 * 0.75 阈值为默认容量与默认负载因子乘积
+            newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY); // 初始阈值= 16 * 0.75 阈值为默认容量与默认负载因子乘积  16长度数组用了12个就开始扩容
         }
         if (newThr == 0) { // 第一个条件分支未计算 newThr 或嵌套分支在计算过程中导致 newThr 溢出归零
             float ft = (float)newCap * loadFactor;

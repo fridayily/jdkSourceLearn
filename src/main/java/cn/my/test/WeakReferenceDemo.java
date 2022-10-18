@@ -13,21 +13,21 @@ public class WeakReferenceDemo {
     public static void main(String[] args) {
 
         // demo0
-        WeakReference<Car> weakReference = new WeakReference<>(new Car());
-        Car car = new Car();
+        WeakReference<Card> weakReference = new WeakReference<>(new Card());
+        Card card = new Card();
         System.out.println("weakReference " +weakReference);
         System.out.println("weakReference.get() " +weakReference.get());
-        System.out.println("car " +car);
+        System.out.println("car " + card);
         System.gc();
         System.out.println("weakReference.get() " +weakReference.get()); // gc 后有被回收
-        System.out.println("car " +car); // gc 后没有被回收
+        System.out.println("car " + card); // gc 后没有被回收
 
 
         // demo1
 
         // 这个ReferenceQueue的主要作用是存放那些已经被gc的reference
-        ReferenceQueue<Car> referenceQueue = new ReferenceQueue<>();
-        WeakReference<Car> weakReference1 = new WeakReference<>(new Car(),referenceQueue);
+        ReferenceQueue<Card> referenceQueue = new ReferenceQueue<>();
+        WeakReference<Card> weakReference1 = new WeakReference<>(new Card(),referenceQueue);
         System.out.println("weakReference " +weakReference);
         System.out.println("weakReference.get() " +weakReference1.get());
         System.gc();
@@ -38,14 +38,14 @@ public class WeakReferenceDemo {
     }
 }
 
- class Car {
+ class Card {
     String name;
     int age;
-    public Car(){
+    public Card(){
         System.out.println("this is Car");
         this.name = "this is Car";
     }
-     public Car(String name,int age){
+     public Card(String name, int age){
          this.name = name;
          this.age = age;
      }
